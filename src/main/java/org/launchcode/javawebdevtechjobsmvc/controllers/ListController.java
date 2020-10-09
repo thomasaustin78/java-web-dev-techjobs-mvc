@@ -1,12 +1,10 @@
 package org.launchcode.javawebdevtechjobsmvc.controllers;
 
-import org.launchcode.javawebdevtechjobsmvc.models.Job;
+import org.launchcode.javawebdevtechjobsmvc.models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import org.launchcode.javawebdevtechjobsmvc.models.JobData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,10 +26,12 @@ public class ListController {
         columnChoices.put("positionType", "Position Type");
         columnChoices.put("coreCompetency", "Skill");
 
+
         tableChoices.put("employer", JobData.getAllEmployers());
         tableChoices.put("location", JobData.getAllLocations());
         tableChoices.put("positionType", JobData.getAllPositionTypes());
         tableChoices.put("coreCompetency", JobData.getAllCoreCompetency());
+        tableChoices.put("all", "View All");
     }
 
     @RequestMapping(value = "")
@@ -56,6 +56,7 @@ public class ListController {
             jobs = JobData.findByColumnAndValue(column, value);
             model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value);
         }
+
         model.addAttribute("jobs", jobs);
 
         return "list-jobs";
